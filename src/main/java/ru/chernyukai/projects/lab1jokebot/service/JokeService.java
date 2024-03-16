@@ -9,7 +9,7 @@ public interface JokeService {
 
     Joke addJoke(Joke joke);
 
-    Joke editJokeById(Long id, String new_text);
+    Joke editJoke(Joke joke, String newText);
 
     void deleteJokeById(Long id);
 

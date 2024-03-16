@@ -7,8 +7,6 @@ import ru.chernyukai.projects.lab1jokebot.model.Joke;
 import ru.chernyukai.projects.lab1jokebot.model.JokeData;
 import ru.chernyukai.projects.lab1jokebot.service.JokeService;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +32,6 @@ public class JokeController {
     @PostMapping
     ResponseEntity<Joke> addJoke(@RequestBody JokeData jokeData) {
         Joke joke = new Joke(jokeData.getText());
-
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String date = currentDate.format(formatter);
-        joke.setCreate_date(date);
-        joke.setUpdate_date(date);
-
         return ResponseEntity.ok(jokeService.addJoke(joke));
     }
 
@@ -50,11 +41,7 @@ public class JokeController {
         Optional<Joke> jokeOptional = jokeService.getJokeById(id);
         if (jokeOptional.isPresent()){
             Joke joke = jokeOptional.get();
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            String date = currentDate.format(formatter);
-            joke.setUpdate_date(date);
-            return ResponseEntity.ok(jokeService.editJokeById(id, jokeData.getText()));
+            return ResponseEntity.ok(jokeService.editJoke(joke, jokeData.getText()));
         }
         else{
             return  ResponseEntity.notFound().build();

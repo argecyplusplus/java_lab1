@@ -56,11 +56,7 @@ public class TelegramBotService {
                 try {
                     Long index = Long.parseLong(update.message().text().substring(6));
                     Optional<Joke> jokeOptional = jokeRepository.getJokeById(index);
-                    if (jokeOptional.isPresent()) {
-                        answerText = "Анекдот #" + index + "\n" + jokeOptional.get().getText();
-                    } else {
-                        answerText = "Нет анекдота с таким номером";
-                    }
+                    answerText = jokeOptional.map(joke -> "Анекдот #" + index + "\n" + joke.getText()).orElse("Нет анекдота с таким номером");
                 } catch (Exception e) {
                     answerText = "Ошибка ввода команды";
                 }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.chernyukai.projects.lab1jokebot.model.Joke;
 import ru.chernyukai.projects.lab1jokebot.repository.JokeRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,20 +18,24 @@ public class JokeServiceImpl implements JokeService{
 
     @Override
     public Joke addJoke(Joke joke) {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String date = currentDate.format(formatter);
+        joke.setCreateDate(date);
+        joke.setUpdateDate(date);
         return jokeRepository.save(joke);
     }
 
     @Override
-    public Joke editJokeById(Long id, String new_text) {
-        Optional<Joke> jokeOptional = jokeRepository.findById(id);
-        if (jokeOptional.isPresent()){
-            Joke original_joke = jokeOptional.get();
-            original_joke.setText(new_text);
-            return jokeRepository.save(original_joke);
-        }
-        else{
-            return null;
-        }
+    public Joke editJoke(Joke joke, String newText) {
+
+        joke.setText(newText);
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String date = currentDate.format(formatter);
+        joke.setUpdateDate(date);
+
+        return jokeRepository.save(joke);
     }
 
     @Override

@@ -24,10 +24,10 @@ public final class Joke {
     private String text;
 
     @Column(name = "create_date")
-    private String create_date;
+    private String createDate;
 
     @Column(name = "update_date")
-    private String update_date;
+    private String updateDate;
 
 }
 
