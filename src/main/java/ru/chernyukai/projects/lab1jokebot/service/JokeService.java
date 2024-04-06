@@ -11,9 +11,13 @@ public interface JokeService {
 
     Joke editJoke(Joke joke, String newText);
 
+    List<Joke> getTop5Jokes();
+
     void deleteJokeById(Long id);
 
     List<Joke> getAllJokes();
 
     Optional<Joke> getJokeById(Long id);
+
+    Joke getRandomJoke ();
 }

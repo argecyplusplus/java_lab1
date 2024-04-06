@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.chernyukai.projects.lab1jokebot.model.Joke;
 import ru.chernyukai.projects.lab1jokebot.model.JokeData;
+import ru.chernyukai.projects.lab1jokebot.service.JokeCallService;
 import ru.chernyukai.projects.lab1jokebot.service.JokeService;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @RequestMapping("/jokes")
 public class JokeController {
     private final JokeService jokeService;
+    private final JokeCallService jokeCallService;
 
     //GET all
     @GetMapping
@@ -24,8 +26,31 @@ public class JokeController {
 
     //GET /id
     @GetMapping("/{id}")
-    ResponseEntity<Joke> getJoke(@PathVariable("id") Long id){
-        return jokeService.getJokeById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    ResponseEntity<Joke> getJoke(@PathVariable("id") Long id, @RequestParam("userId") Long userId){
+
+        Optional<Joke> jokeOptional = jokeService.getJokeById(id);
+        if (jokeOptional.isPresent()){
+            Joke joke = jokeOptional.get();
+            jokeCallService.addJokeCall(joke, userId);
+            return ResponseEntity.ok(joke);
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    //GET random joke
+    @GetMapping("/random")
+    ResponseEntity<Joke> getJoke(@RequestParam("userId") Long userId){
+        Joke joke = jokeService.getRandomJoke();
+        jokeCallService.addJokeCall(joke, userId);
+        return ResponseEntity.ok(joke);
+    }
+
+
+    //GET top5
+    @GetMapping("/top5")
+    ResponseEntity<List<Joke>> getTop5Jokes(){
+        return ResponseEntity.ok(jokeService.getTop5Jokes());
     }
 
     //POST new

@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1712400424305-1
+      author: ????????????? (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: call_seq
+            startValue: 1
+  - changeSet:
+      id: 1712400424305-2
+      author: ????????????? (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: joke_seq
+            startValue: 1
+  - changeSet:
+      id: 1712400424305-3
+      author: ????????????? (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_calls
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: joke_id
+                  type: BIGINT
+              - column:
+                  name: call_time
+                  type: TIME
+              - column:
+                  name: user_id
+                  type: BIGINT
+            tableName: calls
+  - changeSet:
+      id: 1712400424305-4
+      author: ????????????? (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: joke_id
+            baseTableName: calls
+            constraintName: FK_CALLS_ON_JOKE
+            referencedColumnNames: id
+            referencedTableName: jokes
+
