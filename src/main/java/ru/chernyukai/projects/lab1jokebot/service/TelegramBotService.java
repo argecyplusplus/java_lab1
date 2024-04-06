@@ -47,9 +47,9 @@ public class TelegramBotService {
             String answerText;
 
             if (msgText.startsWith("/start")) {
-                answerText = "Вас приветствует бот анекдотов!\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes\nЧтобы получить анекдот по номеру, введите /joke НОМЕР";
+                answerText = "Вас приветствует бот анекдотов!\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes НОМЕР_СТРАНИЦЫ\nЧтобы получить анекдот по номеру, введите /joke НОМЕР";
             } else if (msgText.startsWith("/help")) {
-                answerText = "Доступные команды:\n\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes\nЧтобы получить анекдот по номеру, введите /joke НОМЕР";
+                answerText = "Доступные команды:\n\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes НОМЕР_СТРАНИЦЫ\nЧтобы получить анекдот по номеру, введите /joke НОМЕР";
             } else if (msgText.startsWith("/randomjoke")) {
                 //вывести рандомную шутку
                 Joke joke = jokeService.getRandomJoke();
