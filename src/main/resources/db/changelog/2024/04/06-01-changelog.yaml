@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1712397145426-1
+      author: ????????????? (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_jokes
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: text
+                  type: VARCHAR(255)
+              - column:
+                  name: create_date
+                  type: VARCHAR(255)
+              - column:
+                  name: update_date
+                  type: VARCHAR(255)
+            tableName: jokes
+

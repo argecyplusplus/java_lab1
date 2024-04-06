@@ -16,7 +16,8 @@ public final class Joke {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "joke_seq")
+    @SequenceGenerator(name = "joke_seq", sequenceName = "joke_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
     @NonNull
