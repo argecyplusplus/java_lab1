@@ -20,8 +20,8 @@ public class JokeController {
 
     //GET all
     @GetMapping
-    ResponseEntity<List<Joke>> getJokes() {
-        return ResponseEntity.ok(jokeService.getAllJokes());
+    ResponseEntity<List<Joke>> getJokes(@RequestParam("page") int page) {
+        return ResponseEntity.ok(jokeService.getAllJokes(page));
     }
 
     //GET /id

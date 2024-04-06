@@ -1,5 +1,6 @@
 package ru.chernyukai.projects.lab1jokebot.service;
 
+import org.springframework.data.domain.Page;
 import ru.chernyukai.projects.lab1jokebot.model.Joke;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface JokeService {
 
     void deleteJokeById(Long id);
 
-    List<Joke> getAllJokes();
+    List<Joke> getAllJokes(int page);
 
     Optional<Joke> getJokeById(Long id);
 

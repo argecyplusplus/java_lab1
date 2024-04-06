@@ -1,6 +1,8 @@
 package ru.chernyukai.projects.lab1jokebot.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.chernyukai.projects.lab1jokebot.model.Joke;
 import ru.chernyukai.projects.lab1jokebot.model.JokeCall;
@@ -48,8 +50,9 @@ public class JokeServiceImpl implements JokeService{
     }
 
     @Override
-    public List<Joke> getAllJokes() {
-        return jokeRepository.getJokesBy();
+    public List<Joke> getAllJokes(int page) {
+        int size = 4;
+        return jokeRepository.getJokesBy(PageRequest.of(page, size));
     }
 
     @Override
@@ -61,23 +64,14 @@ public class JokeServiceImpl implements JokeService{
     @Override
     public List<Joke> getTop5Jokes(){
 
-        List<Joke> jokeCalls = null;
-        /*jokeCalls= jokeCallRepository.getTop5JokesIds();
+        List<Long> idsOfTop5 = jokeCallRepository.getIdsOfTop5();
 
-        List<Joke> top5Jokes = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++){
-            System.out.println(jokeCalls.get(i));
-
-            Long jokeId = Arrays.stream(jokeCalls.get(i)).toList().get(0);
-
-            Joke joke = jokeRepository.getJokeById(jokeId).get();
-            top5Jokes.add(joke);
+        List<Joke> jokes = new ArrayList<>();
+        for(Long id:idsOfTop5){
+            jokes.add(jokeRepository.getJokeById(id).get());
         }
-        */
-        return jokeCalls;
 
-
+        return jokes;
     }
 
     @Override

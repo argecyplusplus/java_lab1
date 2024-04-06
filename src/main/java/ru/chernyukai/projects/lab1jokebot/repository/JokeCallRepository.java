@@ -13,7 +13,7 @@ public interface JokeCallRepository extends JpaRepository<JokeCall, Long> {
     //get all calls
     List<JokeCall> getJokeCallsBy();
 
-    //SELECT joke_id, count (*) from calls group by joke_id order by count limit 5
-    /*@Query("select joke_id FROM calls GROUP BY joke_id ORDER BY COUNT(*) DESC limit 5")
-    List<Long> getTop5JokesIds();*/
+    //get top 5 joke_ids by popularity
+    @Query(value="SELECT joke_id, count (*) from calls group by joke_id order by count desc limit 5", nativeQuery = true)
+    List<Long> getIdsOfTop5();
 }
