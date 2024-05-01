@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig">
+    <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
     <option name="sourceModelValue" value="Default" />
     <option name="targetDbValue" value="b3d51864-5604-4ed0-9a05-030db1ca3f6c" />

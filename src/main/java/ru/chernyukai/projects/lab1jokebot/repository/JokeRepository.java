@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface JokeRepository extends JpaRepository<Joke, Long>, PagingAndSortingRepository<Joke, Long> {
     //getting all jokes
-    List<Joke> getJokesBy(PageRequest pageRequest);
+    List<Joke> getJokesBy();
 
     //getting jokes by id
     Optional<Joke> getJokeById(Long id);

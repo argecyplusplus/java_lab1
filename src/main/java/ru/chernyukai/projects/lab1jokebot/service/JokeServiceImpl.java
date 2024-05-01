@@ -2,7 +2,9 @@ package ru.chernyukai.projects.lab1jokebot.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.chernyukai.projects.lab1jokebot.model.Joke;
 import ru.chernyukai.projects.lab1jokebot.model.JokeCall;
@@ -50,9 +52,16 @@ public class JokeServiceImpl implements JokeService{
     }
 
     @Override
-    public List<Joke> getAllJokes(int page) {
-        int size = 4;
-        return jokeRepository.getJokesBy(PageRequest.of(page, size));
+    public Page<Joke> getAllJokes(int page) {
+        int size = 5;
+        List<Joke> jokes =  jokeRepository.getJokesBy();
+
+        //Вывести страницу
+        int start = Math.min(page * size, jokes.size());
+        int end = Math.min((page + 1) * size, jokes.size());
+        List<Joke> usersOnPage = jokes.subList(start, end);
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(usersOnPage, pageable, jokes.size());
     }
 
     @Override

@@ -1,10 +1,13 @@
 package ru.chernyukai.projects.lab1jokebot.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.chernyukai.projects.lab1jokebot.model.Joke;
 import ru.chernyukai.projects.lab1jokebot.model.JokeData;
+import ru.chernyukai.projects.lab1jokebot.model.User;
 import ru.chernyukai.projects.lab1jokebot.service.JokeCallService;
 import ru.chernyukai.projects.lab1jokebot.service.JokeService;
 
@@ -18,19 +21,27 @@ public class JokeController {
     private final JokeService jokeService;
     private final JokeCallService jokeCallService;
 
-    //GET all
+    private User getCurrentUser(){
+        return  (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+
+    //GET all (paging)
     @GetMapping
-    ResponseEntity<List<Joke>> getJokes(@RequestParam("page") int page) {
+    ResponseEntity<Page<Joke>> getJokes(@RequestParam("page") int page) {
         return ResponseEntity.ok(jokeService.getAllJokes(page));
     }
 
     //GET /id
     @GetMapping("/{id}")
-    ResponseEntity<Joke> getJoke(@PathVariable("id") Long id, @RequestParam("userId") Long userId){
+    ResponseEntity<Joke> getJoke(@PathVariable("id") Long id, Long userId){
 
         Optional<Joke> jokeOptional = jokeService.getJokeById(id);
         if (jokeOptional.isPresent()){
             Joke joke = jokeOptional.get();
+            if (userId == null){
+                userId = getCurrentUser().getId();
+            }
             jokeCallService.addJokeCall(joke, userId);
             return ResponseEntity.ok(joke);
         }

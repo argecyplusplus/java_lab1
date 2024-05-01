@@ -60,7 +60,7 @@ public class TelegramBotService {
                 try{
                     int page = Integer.parseInt(msgText.substring(10));
 
-                    List<Joke> allJokes = jokeService.getAllJokes(page);
+                    List<Joke> allJokes = jokeService.getAllJokes(page).getContent();
                     List<Long> indexes = new ArrayList<>();
                     for (Joke joke : allJokes){
                         indexes.add(joke.getId());

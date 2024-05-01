@@ -16,7 +16,7 @@ public interface JokeService {
 
     void deleteJokeById(Long id);
 
-    List<Joke> getAllJokes(int page);
+    Page<Joke> getAllJokes(int page);
 
     Optional<Joke> getJokeById(Long id);
 
