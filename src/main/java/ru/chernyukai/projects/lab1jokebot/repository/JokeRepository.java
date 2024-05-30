@@ -21,4 +21,6 @@ public interface JokeRepository extends JpaRepository<Joke, Long>, PagingAndSort
     @Query(value="select * from jokes order by random() limit 1", nativeQuery = true)
     Joke getRandomJoke();
 
+    @Query(value = "SELECT J.* from calls C join jokes J on J.id = C.joke_id group by C.joke_id, J.id order by count (C.*) desc limit 5", nativeQuery = true)
+    List<Joke> getTop5Jokes();
 }

@@ -47,15 +47,31 @@ public class TelegramBotService {
             String answerText;
 
             if (msgText.startsWith("/start")) {
-                answerText = "Вас приветствует бот анекдотов!\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes НОМЕР_СТРАНИЦЫ\nЧтобы получить анекдот по номеру, введите /joke НОМЕР";
+                answerText = "Вас приветствует бот анекдотов!\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes НОМЕР_СТРАНИЦЫ\nЧтобы получить анекдот по номеру, введите /joke НОМЕР\n/top5 - получить топ-5 шуток";
             } else if (msgText.startsWith("/help")) {
-                answerText = "Доступные команды:\n\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes НОМЕР_СТРАНИЦЫ\nЧтобы получить анекдот по номеру, введите /joke НОМЕР";
+                answerText = "Доступные команды:\n\nЧтобы случайный получить анкедот, введите /randomjoke\nЧтобы получить номера акектодов, введите /alljokes НОМЕР_СТРАНИЦЫ\nЧтобы получить анекдот по номеру, введите /joke НОМЕР\n/top5 - получить топ-5 шуток";
             } else if (msgText.startsWith("/randomjoke")) {
                 //вывести рандомную шутку
                 Joke joke = jokeService.getRandomJoke();
                 jokeCallService.addJokeCall(joke, userId);
                 answerText =joke.getId() + ") " + joke.getText();
-            } else if (msgText.startsWith("/alljokes")) {
+            }
+            else if (msgText.startsWith("/top5")){
+                List<Joke> jokes = jokeService.getTop5Jokes();
+                if (jokes.isEmpty()){
+                    answerText = "Пока нет шуток";
+                }
+                else{
+                    int topId = 1;
+                    answerText = "ТОП 5 шуток:\n";
+                    for (Joke joke: jokes){
+                        answerText += topId + ") " + joke.getText() + "\n";
+                        topId++;
+                    }
+                }
+            }
+
+            else if (msgText.startsWith("/alljokes")) {
                 //вывести все номера шуток (нужный лист)
                 try{
                     int page = Integer.parseInt(msgText.substring(10));

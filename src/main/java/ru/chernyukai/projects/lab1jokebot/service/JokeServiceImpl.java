@@ -72,15 +72,7 @@ public class JokeServiceImpl implements JokeService{
 
     @Override
     public List<Joke> getTop5Jokes(){
-
-        List<Long> idsOfTop5 = jokeCallRepository.getIdsOfTop5();
-
-        List<Joke> jokes = new ArrayList<>();
-        for(Long id:idsOfTop5){
-            jokes.add(jokeRepository.getJokeById(id).get());
-        }
-
-        return jokes;
+        return jokeRepository.getTop5Jokes();
     }
 
     @Override
