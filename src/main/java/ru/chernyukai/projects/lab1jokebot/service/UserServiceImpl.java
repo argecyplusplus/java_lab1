@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.chernyukai.projects.lab1jokebot.exceptions.UsernameAlreadyExistsException;
 import ru.chernyukai.projects.lab1jokebot.model.User;
 import ru.chernyukai.projects.lab1jokebot.model.UserAuthority;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
+    @Transactional
     public void registration(String username, String password) throws UsernameAlreadyExistsException {
         if (userRepository.findByUsername(username).isEmpty()) {
             User user = userRepository.save(
@@ -84,6 +86,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public Optional<User> editUserAuthority(Long id, boolean isModerator){
         Optional<User> userOptional = userRepository.getUserById(id);
 
